@@ -9,8 +9,9 @@ def main(source):
 
     pages = PdfReader(source).pages
     split_pages = split_all(pages)
+    ordered_pages = put_back_cover_last(split_pages)
 
-    write_to_pdf('output/digital.' + os.path.basename(source), split_pages)
+    write_to_pdf('output/digital.' + os.path.basename(source), ordered_pages)
 
 
 def split_all(pages):
@@ -29,6 +30,12 @@ def split(page):
             yield PageMerge().add(page, viewrect=(x_pos, 0, 0.5, 1)).render()
     else:
         yield page
+
+
+def put_back_cover_last(pages):
+    back_cover = pages[0]
+    ordered_pages = pages[1:] + [back_cover]
+    return ordered_pages
 
 
 def write_to_pdf(destination, pages):
