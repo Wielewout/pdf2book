@@ -123,6 +123,8 @@ def get_single_side_quire_page(pages):
 
     half_index = round(number_of_pages / 2)
 
+    rotate_all(180, pages[half_index:])
+
     result = PageMerge() + (x for x in pages if x is not None)
 
     width = result[0].w
@@ -141,6 +143,16 @@ def get_single_side_quire_page(pages):
         result[i].y += dy
 
     return result.render()
+
+
+def rotate_all(degrees, pages):
+    for page in pages:
+        rotate(degrees, page)
+
+
+def rotate(degrees, page):
+    page.Rotate = (int(page.inheritable.Rotate or
+                       0) + degrees) % 360
 
 
 def write_to_pdf(destination, pages):
