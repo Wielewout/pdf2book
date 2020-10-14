@@ -11,7 +11,8 @@ def main(source):
     split_pages = split_all(pages)
     ordered_pages = put_back_cover_last(split_pages)
 
-    write_to_pdf('output/digital.' + os.path.basename(source), ordered_pages)
+    digital_pages = [ordered_pages[0]] + pages[1:] + [ordered_pages[-1]]
+    write_to_pdf('output/digital.' + os.path.basename(source), digital_pages)
 
 
 def split_all(pages):
